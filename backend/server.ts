@@ -8,10 +8,13 @@ connectDB();
 
 const app = express();
 
+// https://stackoverflow.com/a/51844327/9725586
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+// app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/goals", require("./routes/goalRoutes"));
+app.use("/api/users", require("./routes/userRoutes"));
 
 app.use(errorHandler);
 

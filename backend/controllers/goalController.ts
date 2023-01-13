@@ -23,6 +23,7 @@ export const setGoals = asyncHandler(async (req: Request, res: Response) => {
   const goal = await Goal.create({
     text: req.body.text,
   });
+
   res.status(200).json(goal);
 });
 
