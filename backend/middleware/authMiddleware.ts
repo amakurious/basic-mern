@@ -1,16 +1,18 @@
-import asyncHandler from "express-async-handler";
 import jwt from "jsonwebtoken";
+import asyncHandler from "express-async-handler";
 import User from "../models/userModel";
-import { NextFunction, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
 interface JwtPayload {
   id: string;
 }
 
 export const protect = asyncHandler(
-  async (req: any, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     let token: string = "";
 
+    if (req.headers) {
+    }
     if (
       req.headers.authorization &&
       req.headers.authorization.startsWith("Bearer")
@@ -26,7 +28,7 @@ export const protect = asyncHandler(
         ) as JwtPayload;
 
         // Get user from token
-        req.user = await User.findById(decoded.id).select("-password");
+        req.body.user = await User.findById(decoded.id).select(["-password"]);
 
         next();
       } catch (error) {

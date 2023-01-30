@@ -5,6 +5,12 @@ import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import User from "../models/userModel";
 
+const generateToken = (id: Types.ObjectId) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET as string, {
+    expiresIn: "30d",
+  });
+};
+
 // @desc     Register new user
 // @route    POST /api/signup
 // @access   Public
@@ -46,8 +52,6 @@ export const registerUser = asyncHandler(
       res.status(400);
       throw new Error("Invalid user data");
     }
-
-    res.json({ message: "Register User" });
   }
 );
 
@@ -84,8 +88,8 @@ export const getAllUsers = asyncHandler(async (req: Request, res: Response) => {
 // @desc     Get all user data
 // @route    GET /api/users/me
 // @access   Private
-export const getUser = asyncHandler(async (req: any, res: Response) => {
-  const { _id, name, email }: any = await User.findById(req.user.id);
+export const getUser = asyncHandler(async (req: Request, res: Response) => {
+  const { _id, name, email }: any = await User.findById(req.body.user.id);
 
   res.status(200).json({
     id: _id,
@@ -93,9 +97,3 @@ export const getUser = asyncHandler(async (req: any, res: Response) => {
     email,
   });
 });
-
-const generateToken = (id: Types.ObjectId) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET as string, {
-    expiresIn: "30d",
-  });
-};

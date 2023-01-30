@@ -5,7 +5,8 @@
   "main": "server.ts",
   "scripts": {
     "start": "node backend/server.ts",
-    "server": "nodemon backend/server.ts"
+    "server": "nodemon backend/server.ts",
+    "client": "yarn --cwd frontend dev" 
   },
   "author": "Ama",
   "license": "MIT",
