@@ -89,11 +89,5 @@ export const getAllUsers = asyncHandler(async (req: Request, res: Response) => {
 // @route    GET /api/users/me
 // @access   Private
 export const getUser = asyncHandler(async (req: Request, res: Response) => {
-  const { _id, name, email }: any = await User.findById(req.body.user.id);
-
-  res.status(200).json({
-    id: _id,
-    name,
-    email,
-  });
+  res.status(200).json(req.body.user);
 });
